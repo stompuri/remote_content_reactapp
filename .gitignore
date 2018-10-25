@@ -1,2 +1,12 @@
-node_modules
+# dependencies
+/node_modules
+
+# testing
+/tests
+
+# production
+/build
+
+# misc
 package-lock.json
+npm-debug.log*

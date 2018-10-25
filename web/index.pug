@@ -1,0 +1,27 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='theme-color' content='#000000')
+
+    title ReactApp
+    link(rel='stylesheet' href=xforwardedhost+'css/App.css')
+
+    body
+      p X-Forwarded-Host = #{xforwardedhost}
+
+      noscript.
+        You need to enable JavaScript to run this app.
+
+      div(id='root' class='container')
+
+      script(crossorigin src='https://unpkg.com/react@16/umd/react.development.js')
+      script(crossorigin src='https://unpkg.com/react-dom@16/umd/react-dom.development.js')
+      script(crossorigin src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js')
+
+      script.
+        window.xforwardedhost = '#{xforwardedhost}';
+
+      script(type='text/babel' src=xforwardedhost+'js/App.js')
+      script(type='text/babel' src=xforwardedhost+'index.js')

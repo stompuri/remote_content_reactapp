@@ -1,26 +1,25 @@
-const Koa = require('Koa');
-const views = require('koa-views');
-const Router = require('koa-router');
+'use strict';
+const express = require('express');
+const pug = require('pug');
 
-const app = new Koa();
-const router = new Router();
+const PORT = process.env.PORT || 9000;
+const HOST = process.env.HOST || 'http://localhost:' + PORT;
 
-app.use(views(__dirname, {extension: 'pug'}));
+const app = new express();
+app.set('views', __dirname + '/web');
+app.set('view engine', 'pug')
 
+const options = {
+  extensions: ['pug', 'js', 'css', 'svg'],
+  index: false,
+  redirect: false
+};
+app.use(express.static('web', options));
 
-router.get('/', async function (ctx, next) {
-  console.log('Setting body');
-  ctx.body = 'Hello from Koa!';
-
-  ctx.state = {
-    host: 'localhost:3002'
-  };
- 
-  await ctx.render('index');
+app.get('/', function (req, res) {
+  const xforwardedhost = req.headers['x-forwarded-host'] || '';
+  res.render('index', { xforwardedhost: xforwardedhost });
 });
 
-app
-  .use(router.routes())
-  .use(router.allowedMethods());
-
-app.listen(3002, () => console.log('Server listening on port 3002'));
+app.listen(PORT);
+console.log(`App listening on port ${PORT}`);
